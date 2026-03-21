@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -16,11 +16,65 @@
 </head>
 <body>
 
-  <header class="app-header">
-    <h2>🍛 Nearby Local Food</h2>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">🍛 LocalPlates</div>
+      <div class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#map-section">Find Food</a>
+        <a href="#feedback">Feedback</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="hero" class="hero-section">
+    <div class="hero-content">
+      <h1>Discover Local Flavors Around You</h1>
+      <p>Find the best budget-friendly tiffin spots, roadside stalls, and hidden gems in your neighborhood.</p>
+      <a href="#map-section" class="btn btn-primary">Find Food Near Me</a>
+    </div>
   </header>
 
-  <div id="map"></div>
+  <!-- Map Section -->
+  <section id="map-section" class="map-section">
+    <div class="section-header">
+      <h2>Nearby Local Food</h2>
+      <p>Explore our interactive map to discover delicious and affordable meals.</p>
+    </div>
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- Feedback Section -->
+  <section id="feedback" class="feedback-section">
+    <div class="feedback-container">
+      <h2>Help Us Improve</h2>
+      <p>Have a favorite spot we missed? Or suggestions to improve LocalPlates? Let us know!</p>
+      <form action="mailto:inertia.icse@gmail.com" method="post" enctype="text/plain" class="feedback-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="Name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <label for="shop-name">Shop Recommendation</label>
+          <input type="text" id="shop-name" name="Shop Recommendation" placeholder="E.g. Sharma Ji Tiffin">
+        </div>
+        <div class="form-group">
+          <label for="message">Message / Feedback</label>
+          <textarea id="message" name="Message" rows="4" placeholder="Tell us what makes it special or how we can improve..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Feedback</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 LocalPlates. All rights reserved.</p>
+  </footer>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
