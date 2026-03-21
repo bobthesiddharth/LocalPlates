@@ -10,7 +10,7 @@ L.Icon.Default.mergeOptions({
 document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('mobile-menu-btn');
     const navLinks = document.getElementById('nav-links');
-    
+
     if (menuBtn && navLinks) {
         menuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
@@ -76,6 +76,23 @@ const shops = [
         ]
     },
     {
+        name: "Roti Tadka Chana Point",
+        lat: 22.576591,
+        lng: 88.474049,
+        items: [
+            { name: "Roti", price: "₹7", time: "Dinner" },
+
+            { name: "Tadka Half", price: "₹20", time: "Dinner" },
+            { name: "Tadka Full", price: "₹40", time: "Dinner" },
+
+            { name: "Chana Half", price: "₹25", time: "Dinner" },
+            { name: "Chana Full", price: "₹40", time: "Dinner" },
+
+            { name: "Mudhi (Puffed Rice)", price: "₹20", time: "Dinner" },
+            { name: "Ghugni with Mudhi", price: "₹20", time: "Dinner" }
+        ]
+    },
+    {
         name: "Evening Roti Point",
         lat: 22.576667,
         lng: 88.471556,
@@ -136,10 +153,19 @@ navigator.geolocation.getCurrentPosition(
                 `;
             });
 
+            // Google Maps URL including destination coordinates
+            const directionUrl = `https://www.google.com/maps/dir/?api=1&destination=${shop.lat},${shop.lng}`;
+
             const popupContent = `
                 <div class="custom-popup-content">
                     <h3 class="shop-name">${shop.name}</h3>
-                    <div class="menu-label">Menu</div>
+                    <a href="${directionUrl}" target="_blank" class="btn-navigate">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                        Get Directions
+                    </a>
+                    <div class="menu-label" style="margin-top: 20px;">Menu</div>
                     <div class="menu-list">${itemsHTML}</div>
                 </div>
             `;
