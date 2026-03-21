@@ -157,8 +157,14 @@ a {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: radial-gradient(circle at top right, rgba(242, 106, 79, 0.08), transparent 50%),
-              radial-gradient(circle at bottom left, rgba(45, 42, 38, 0.04), transparent 50%);
+  background: 
+    radial-gradient(circle at top right, rgba(242, 106, 79, 0.08), transparent 50%),
+    radial-gradient(circle at bottom left, rgba(45, 42, 38, 0.04), transparent 50%),
+    linear-gradient(rgba(251, 249, 246, 0.90), rgba(251, 249, 246, 0.90)),
+    url('images/kolkata_food_doodles.png');
+  background-size: auto, auto, auto, 400px;
+  background-position: center;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
 }
 
 .hero-content {
@@ -166,20 +172,21 @@ a {
 }
 
 .tagline-badge {
-  display: inline-flex;
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin: 44px auto 0;
   align-items: center;
-  padding: 8px 20px;
-  background: linear-gradient(135deg, rgba(242, 106, 79, 0.05), rgba(242, 106, 79, 0.15));
+  padding: 8px 24px;
   color: var(--primary);
+  border: 2px solid var(--primary);
   border-radius: 100px;
-  font-size: 0.95rem;
+  font-family: inherit;
+  font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  margin-bottom: 24px;
-  border: 1px solid rgba(242, 106, 79, 0.3);
-  box-shadow: 0 8px 16px rgba(242, 106, 79, 0.1);
   animation: float 4s ease-in-out infinite;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(242, 106, 79, 0.15);
 }
 
 @keyframes float {
@@ -334,6 +341,12 @@ a {
 /* Feedback Section */
 .feedback-section {
   padding: var(--section-pd);
+  background: 
+    linear-gradient(rgba(251, 249, 246, 0.92), rgba(251, 249, 246, 0.92)),
+    url('images/kolkata_footer_doodles.png');
+  background-size: auto, 400px;
+  background-position: center;
+  background-repeat: no-repeat, repeat;
 }
 
 .feedback-container {
@@ -530,6 +543,41 @@ a {
   transform: translateY(-1px);
 }
 
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 52px;
+  height: 52px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(242, 106, 79, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 9999;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(242, 106, 79, 0.45);
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
   :root {
@@ -597,5 +645,12 @@ a {
   .btn {
     width: 100%;
     text-align: center;
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
   }
 }
