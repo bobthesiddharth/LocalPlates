@@ -6,6 +6,26 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
 });
 
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        const links = navLinks.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+});
+
 // Shop Data
 const shops = [
     {

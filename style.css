@@ -91,6 +91,15 @@ a {
   color: var(--primary);
 }
 
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 4px;
+}
+
 /* Button */
 .btn {
   display: inline-block;
@@ -343,4 +352,74 @@ a {
 .item-time {
   font-size: 0.75rem;
   color: var(--text-muted);
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  :root {
+    --section-pd: 60px 16px;
+  }
+  
+  .nav-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+  }
+  
+  .navbar {
+    padding: 12px 0;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none; /* Hidden by default behind three dots */
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 24px 0;
+    font-size: 1.1rem;
+    background: rgba(251, 249, 246, 0.98);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .hero-section {
+    padding: 160px 16px 60px;
+    min-height: 70vh;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+    padding: 0;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .feedback-container {
+    padding: 32px 20px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
 }
