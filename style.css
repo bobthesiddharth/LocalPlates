@@ -1,15 +1,155 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  background-color: #f5f5f5;
+:root {
+  --primary: #f26a4f; /* Warm sunset tone */
+  --bg-color: #fbf9f6; /* Warm off-white */
+  --text-dark: #2d2a26;
+  --text-muted: #7c7365;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --border-radius: 20px;
+  --shadow-sm: 0 4px 12px rgba(45, 42, 38, 0.08);
+  --shadow-lg: 0 12px 32px rgba(45, 42, 38, 0.12);
+  --font-family: 'Outfit', sans-serif;
 }
 
-h2 {
-  margin: 10px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  overflow: hidden; /* Prevent scrolling, map is full screen */
+}
+
+/* Floating Header */
+.app-header {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 14px 28px;
+  border-radius: 100px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.app-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #map {
-  height: 90vh;
-  width: 100%;
+  height: 100dvh;
+  width: 100vw;
+}
+
+/* --- Leaflet Overrides --- */
+.leaflet-container {
+  font-family: var(--font-family);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--card-bg) !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 0 !important; /* Let custom content handle padding */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.leaflet-popup-tip-container {
+  width: 24px;
+  height: 24px;
+  margin-top: -1px;
+}
+
+.leaflet-popup-tip {
+  background: var(--card-bg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Custom Popup Content */
+.custom-popup-content {
+  padding: 20px;
+  min-width: 240px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.shop-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+}
+
+.menu-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding-bottom: 6px;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.item-name {
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.item-price {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  background: rgba(242, 106, 79, 0.1);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.item-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }

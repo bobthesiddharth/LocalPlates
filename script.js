@@ -106,18 +106,21 @@ navigator.geolocation.getCurrentPosition(
 
             shop.items.forEach(item => {
                 itemsHTML += `
-                    <li>
-                        ${item.name} - ${item.price}<br>
-                        <small style="color:gray;">${item.time || ""}</small>
-                    </li>
+                    <div class="menu-item">
+                        <div class="item-header">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">${item.price}</span>
+                        </div>
+                        <div class="item-time">${item.time || ""}</div>
+                    </div>
                 `;
             });
 
             const popupContent = `
-                <div style="font-family: Arial; min-width:180px;">
-                    <h3>${shop.name}</h3>
-                    <b>Menu:</b>
-                    <ul>${itemsHTML}</ul>
+                <div class="custom-popup-content">
+                    <h3 class="shop-name">${shop.name}</h3>
+                    <div class="menu-label">Menu</div>
+                    <div class="menu-list">${itemsHTML}</div>
                 </div>
             `;
 
