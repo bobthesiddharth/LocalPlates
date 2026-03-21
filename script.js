@@ -116,6 +116,25 @@ const shops = [
     },
 ];
 
+// Global update price function for handling inline price edits
+window.updatePrice = function(shopIndex, itemIndex) {
+    const newPrice = prompt("Enter the new price (e.g., ₹30):");
+    if (newPrice && newPrice.trim() !== "") {
+        // Update local object
+        shops[shopIndex].items[itemIndex].price = newPrice;
+        // Update DOM instantly
+        const priceElement = document.getElementById(`price-${shopIndex}-${itemIndex}`);
+        if (priceElement) {
+            priceElement.innerHTML = newPrice;
+            priceElement.classList.remove('pending-price');
+            const btn = priceElement.nextElementSibling;
+            if (btn && btn.classList.contains('btn-update-price')) {
+                btn.remove();
+            }
+        }
+    }
+};
+
 // Get user location FIRST
 navigator.geolocation.getCurrentPosition(
     function (position) {
@@ -137,16 +156,27 @@ navigator.geolocation.getCurrentPosition(
             .openPopup();
 
         // Add shops (ONLY HERE ✅)
-        shops.forEach(shop => {
+        shops.forEach((shop, shopIndex) => {
 
             let itemsHTML = "";
 
-            shop.items.forEach(item => {
+            shop.items.forEach((item, itemIndex) => {
+                let priceDisplay = `<span class="item-price" id="price-${shopIndex}-${itemIndex}">${item.price}</span>`;
+                
+                if (item.price === "Price updating soon") {
+                    priceDisplay = `
+                        <span class="item-price-wrapper">
+                            <span class="item-price pending-price" id="price-${shopIndex}-${itemIndex}">${item.price}</span>
+                            <button class="btn-update-price" onclick="updatePrice(${shopIndex}, ${itemIndex})">Update</button>
+                        </span>
+                    `;
+                }
+
                 itemsHTML += `
                     <div class="menu-item">
                         <div class="item-header">
                             <span class="item-name">${item.name}</span>
-                            <span class="item-price">${item.price}</span>
+                            ${priceDisplay}
                         </div>
                         <div class="item-time">${item.time || ""}</div>
                     </div>
