@@ -114,10 +114,50 @@ const shops = [
             { name: "Ghuguni", price: "Price updating soon", time: "Dinner" }
         ]
     },
+    {
+        name: "Morning Luchi Chole Stall",
+        lat: 22.578139,
+        lng: 88.458194,
+        items: [
+            { name: "Luchi / Puri", price: "₹40 (total avg)", time: "Morning" },
+            { name: "Chana / Chole Masala", price: "₹40 (total avg)", time: "Morning" },
+            { name: "Egg Curry", price: "₹40 (total avg)", time: "Morning" }
+        ]
+    },
+    {
+        name: "Luchi & Street Food Corner",
+        lat: 22.577419,
+        lng: 88.471752,
+        items: [
+
+            // 🌅 Morning
+            { name: "Luchi / Puri with Sabji", price: "₹40", time: "Morning" },
+            { name: "Mudi (Puffed Rice)", price: "₹20", time: "Morning" },
+
+            // 🌙 Night Street Food
+            { name: "Momo", price: "₹60", time: "Night" },
+            { name: "Sahi Tukda (1 piece)", price: "₹55", time: "Night" },
+            { name: "Egg Roll", price: "₹45", time: "Night" },
+            { name: "Chicken Kabab", price: "Price updating soon", time: "Night" }
+        ]
+    },
+    {
+        name: "Budget Lunch Meal Point",
+        lat: 22.574723,
+        lng: 88.474097,
+        items: [
+
+            // 🍛 Lunch
+            { name: "Veg Meal", price: "₹60", time: "Lunch" },
+            { name: "Fish Meal (Non-Veg)", price: "₹80", time: "Lunch" },
+            { name: "Chicken Meal (Non-Veg)", price: "₹90", time: "Lunch" }
+
+        ]
+    },
 ];
 
 // Global update price function for handling inline price edits
-window.updatePrice = function(shopIndex, itemIndex) {
+window.updatePrice = function (shopIndex, itemIndex) {
     const newPrice = prompt("Enter the new price (e.g., ₹30):");
     if (newPrice && newPrice.trim() !== "") {
         // Update local object
@@ -162,7 +202,7 @@ navigator.geolocation.getCurrentPosition(
 
             shop.items.forEach((item, itemIndex) => {
                 let priceDisplay = `<span class="item-price" id="price-${shopIndex}-${itemIndex}">${item.price}</span>`;
-                
+
                 if (item.price === "Price updating soon") {
                     priceDisplay = `
                         <span class="item-price-wrapper">
