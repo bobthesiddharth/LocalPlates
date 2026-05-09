@@ -1,0 +1,113 @@
+.feedback-section {
+  padding: var(--section-pd, 100px 24px);
+  background:
+    linear-gradient(rgba(251, 249, 246, 0.92), rgba(251, 249, 246, 0.92)),
+    url('/assets/images/kolkata_footer_doodles.png');
+  background-size: auto, 400px;
+  background-position: center;
+  background-repeat: no-repeat, repeat;
+}
+
+.feedback-container {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 56px 48px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.feedback-container h2 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.feedback-container > p {
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fbf9f6;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(45, 42, 38, 0.5);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary, #f26a4f);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(242, 106, 79, 0.1);
+}
+
+.success-message {
+  padding: 12px 16px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.error-message {
+  padding: 12px 16px;
+  background: #f8d7da;
+  color: #721c24;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-dark, #2d2a26);
+  border: 2px solid var(--text-dark, #2d2a26);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--text-dark, #2d2a26);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .feedback-section {
+    padding: var(--section-pd, 60px 16px);
+  }
+
+  .feedback-container {
+    padding: 32px 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+
+

@@ -1,0 +1,33 @@
+<app-nav-bar></app-nav-bar>
+<div class="auth-page">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-card" novalidate>
+    <h2>Login</h2>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" formControlName="email" />
+      <div class="error" *ngIf="f.email.touched && f.email.invalid">
+        <div *ngIf="f.email.errors?.['required']">Email is required.</div>
+        <div *ngIf="f.email.errors?.['email']">Enter a valid email.</div>
+      </div>
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" />
+      <div class="error" *ngIf="f.password.touched && f.password.invalid">
+        <div *ngIf="f.password.errors?.['required']">Password is required.</div>
+        <div *ngIf="f.password.errors?.['minlength']">Password must be at least 6 characters.</div>
+      </div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="form.invalid || submitting">
+      {{ submitting ? 'Signing in...' : 'Sign in' }}
+    </button>
+
+    <p class="muted">Don't have an account? <a routerLink="/signup">Sign up</a></p>
+  </form>
+</div>
+
+<app-footer></app-footer>
+

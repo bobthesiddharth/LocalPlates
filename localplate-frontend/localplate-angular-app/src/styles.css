@@ -1,1 +1,413 @@
-/* You can add global styles to this file, and also import other style files */
+/* Import Leaflet CSS first */
+@import 'https://unpkg.com/leaflet/dist/leaflet.css';
+
+/* Global CSS variables (colors, spacing, etc.)
+   These variables are used by component styles (e.g. nav bar).
+   Added to ensure colors like --link-color and --primary-hover are defined.
+*/
+:root {
+  --primary: #f26a4f;
+  --primary-hover: #e05538;
+  --link-color: var(--primary);
+  --bg-color: #fbf9f6;
+  --text-dark: #2d2a26;
+  --text-muted: #7c7365;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --border-radius: 20px;
+  --shadow-sm: 0 4px 12px rgba(45, 42, 38, 0.08);
+  --shadow-lg: 0 12px 32px rgba(45, 42, 38, 0.12);
+  --font-family: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+
+/* Leaflet Overrides */
+.leaflet-container {
+  font-family: var(--font-family);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--card-bg) !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 0 !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.leaflet-popup-tip-container {
+  width: 24px;
+  height: 24px;
+  margin-top: -1px;
+}
+
+.leaflet-popup-tip {
+  background: var(--card-bg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Custom Popup Content */
+.custom-popup-content {
+  padding: 20px;
+  min-width: 240px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.shop-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+}
+
+.menu-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 6px;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.item-name {
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.item-price {
+  font-weight: 600;
+  color: var(--primary, #f26a4f);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  background: rgba(242, 106, 79, 0.1);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.item-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.item-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-price.pending-price {
+  background: rgba(200, 200, 200, 0.2);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.btn-update-price {
+  background: var(--primary, #f26a4f);
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-update-price:hover {
+  background: var(--primary-hover, #e05538);
+  transform: translateY(-1px);
+}
+
+.btn-navigate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary, #f26a4f);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(242, 106, 79, 0.2);
+  margin-top: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-navigate:hover {
+  background-color: var(--primary-hover, #e05538);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(242, 106, 79, 0.3);
+}
+
+.hero-section {
+  padding: 160px 24px 100px;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at top right, rgba(242, 106, 79, 0.08), transparent 50%),
+    radial-gradient(circle at bottom left, rgba(45, 42, 38, 0.04), transparent 50%),
+    linear-gradient(rgba(251, 249, 246, 0.9), rgba(251, 249, 246, 0.9)),
+    url('/assets/images/kolkata_food_doodles.png');
+  background-size: auto, auto, auto, 400px;
+  background-position: center;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+}
+
+.hero-content {
+  max-width: 760px;
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  margin-bottom: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.hero-content p {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  margin-bottom: 40px;
+  padding: 0 20px;
+  color: var(--text-muted, #7c7365);
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 100px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary, #f26a4f);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(242, 106, 79, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover, #e05538);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(242, 106, 79, 0.4);
+}
+
+.tagline-badge {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin: 44px auto 0;
+  align-items: center;
+  padding: 8px 24px;
+  color: var(--primary, #f26a4f);
+  border: 2px solid var(--primary, #f26a4f);
+  border-radius: 100px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  animation: float 4s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(242, 106, 79, 0.15);
+}
+
+.tagline-badge svg {
+  margin-right: 8px;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.gallery-section {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  background-color: var(--bg-color, #fbf9f6);
+  position: relative;
+  display: flex;
+}
+
+.gallery-section::before,
+.gallery-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gallery-section::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-color, #fbf9f6), transparent);
+}
+
+.gallery-section::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-color, #fbf9f6), transparent);
+}
+
+.gallery-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: scroll-gallery 30s linear infinite;
+}
+
+.gallery-track:hover {
+  animation-play-state: paused;
+}
+
+.gallery-item {
+  width: calc((100vw - 16px * 4) / 5);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm, 0 4px 12px rgba(45, 42, 38, 0.08));
+  aspect-ratio: 4 / 3;
+  background-color: #eaeaea;
+  flex-shrink: 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+@keyframes scroll-gallery {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+@media (max-width: 1024px) {
+  .gallery-item {
+    width: calc((100vw - 16px * 3) / 4);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 150px 16px 60px;
+    min-height: 70vh;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+    padding: 0;
+  }
+
+  .tagline-badge {
+    font-size: 0.92rem;
+    padding: 8px 14px;
+  }
+
+  .gallery-item {
+    width: calc((100vw - 16px * 2) / 3);
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-item {
+    width: calc((100vw - 16px) / 2);
+  }
+}
+
+@media (max-width: 400px) {
+  .gallery-item {
+    width: 100vw;
+    border-radius: 0;
+  }
+}
+
+app-upi-support-card {
+  background:
+    linear-gradient(rgba(251, 249, 246, 0.92), rgba(251, 249, 246, 0.92)),
+    url('/assets/images/kolkata_footer_doodles.png');
+  background-size: auto, 320px;
+  background-position: center;
+  background-repeat: no-repeat, repeat;
+}
+

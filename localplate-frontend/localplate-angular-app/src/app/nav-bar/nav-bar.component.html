@@ -1,0 +1,53 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">🍛 LocalPlates</div>
+
+    <button
+      class="menu-toggle"
+      id="mobile-menu-btn"
+      type="button"
+      aria-label="Toggle menu"
+      aria-controls="nav-links"
+      [attr.aria-expanded]="isMenuOpen"
+      (click)="toggleMenu()"
+    >
+      <!-- Three horizontal dots -->
+      <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5" cy="12" r="2"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <circle cx="19" cy="12" r="2"></circle>
+      </svg>
+    </button>
+
+    <div class="nav-links" id="nav-links" [class.open]="isMenuOpen">
+      <a href="#hero" (click)="closeMenu()">Home</a>
+      <a href="#hero" (click)="closeMenu()">About</a>
+      <a href="#map-section" (click)="closeMenu()">Find Food</a>
+      <a href="#feedback" (click)="closeMenu()">Feedback</a>
+      <a routerLink="/login" (click)="closeMenu()">Login</a>
+      <a routerLink="/signup" (click)="closeMenu()">Signup</a>
+
+      <div class="more-dropdown" (click)="$event.stopPropagation()">
+        <button
+          type="button"
+          class="more-toggle"
+          aria-haspopup="menu"
+          aria-controls="more-menu"
+          [attr.aria-expanded]="isMoreOpen"
+          (click)="toggleMoreMenu($event)"
+        >
+          More
+          <span class="more-caret" [class.open]="isMoreOpen">⌄</span>
+        </button>
+
+        <div class="more-menu" id="more-menu" role="menu" [class.open]="isMoreOpen">
+          <a href="#photo-gallery" role="menuitem" (click)="closeMenu()">Gallery</a>
+          <a href="#map-section" role="menuitem" (click)="closeMenu()">Nearby Spots</a>
+          <a href="#feedback" role="menuitem" (click)="closeMenu()">Contact</a>
+          <a href="#feedback" role="menuitem" (click)="closeMenu()">Help & FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

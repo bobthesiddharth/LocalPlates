@@ -1,0 +1,42 @@
+<app-nav-bar></app-nav-bar>
+<div class="auth-page">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-card" novalidate>
+    <h2>Create account</h2>
+
+    <label class="field">
+      <span>Name</span>
+      <input type="text" formControlName="name" />
+      <div class="error" *ngIf="f.name.touched && f.name.invalid">Name is required.</div>
+    </label>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" formControlName="email" />
+      <div class="error" *ngIf="f.email.touched && f.email.invalid">
+        <div *ngIf="f.email.errors?.['required']">Email is required.</div>
+        <div *ngIf="f.email.errors?.['email']">Enter a valid email.</div>
+      </div>
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" />
+      <div class="error" *ngIf="f.password.touched && f.password.invalid">
+        <div *ngIf="f.password.errors?.['required']">Password is required.</div>
+        <div *ngIf="f.password.errors?.['minlength']">Password must be at least 6 characters.</div>
+      </div>
+    </label>
+
+    <label class="field">
+      <span>Confirm Password</span>
+      <input type="password" formControlName="confirmPassword" />
+      <div class="error" *ngIf="(f.confirmPassword.touched || form.touched) && form.errors?.['mismatch']">Passwords do not match.</div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="form.invalid || submitting">{{ submitting ? 'Creating...' : 'Create account' }}</button>
+
+    <p class="muted">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </form>
+</div>
+<app-footer></app-footer>
+
