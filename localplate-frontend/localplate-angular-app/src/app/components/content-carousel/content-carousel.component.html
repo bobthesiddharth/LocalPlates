@@ -1,0 +1,37 @@
+<section class="carousel-shell" *ngIf="items.length > 0">
+  <div class="head">
+    <p class="kicker" *ngIf="title">{{ title }}</p>
+    <p class="subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+  </div>
+
+  <div class="frame">
+    <button class="nav prev" type="button" (click)="prev()" aria-label="Previous slide">&#8249;</button>
+
+    <div class="track" [style.transform]="'translateX(-' + activeIndex * 100 + '%)'">
+      <article class="slide" *ngFor="let item of items">
+        <img [src]="item.image" [alt]="item.title" loading="lazy" />
+        <div class="overlay">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <a *ngIf="item.link" [routerLink]="item.link" class="slide-cta">
+            {{ item.cta || 'Explore' }}
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <button class="nav next" type="button" (click)="next()" aria-label="Next slide">&#8250;</button>
+  </div>
+
+  <div class="dots" *ngIf="items.length > 1">
+    <button
+      type="button"
+      *ngFor="let item of items; let i = index"
+      class="dot"
+      [class.active]="i === activeIndex"
+      (click)="goTo(i)"
+      [attr.aria-label]="'Go to slide ' + (i + 1)"
+    ></button>
+  </div>
+</section>
+

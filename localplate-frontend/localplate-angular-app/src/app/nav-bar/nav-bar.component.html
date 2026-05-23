@@ -21,12 +21,18 @@
     </button>
 
     <div class="nav-links" id="nav-links" [class.open]="isMenuOpen">
-      <a href="#hero" (click)="closeMenu()">Home</a>
-      <a href="#hero" (click)="closeMenu()">About</a>
-      <a href="#map-section" (click)="closeMenu()">Find Food</a>
-      <a href="#feedback" (click)="closeMenu()">Feedback</a>
-      <a routerLink="/login" (click)="closeMenu()">Login</a>
-      <a routerLink="/signup" (click)="closeMenu()">Signup</a>
+      <ng-container *ngIf="!isLoggedIn(); else loggedIn">
+        <a routerLink="/" (click)="closeMenu()">Home</a>
+        <a routerLink="/about" (click)="closeMenu()">About</a>
+        <a routerLink="/find-food" (click)="closeMenu()">Find Food</a>
+        <a routerLink="/feedback" (click)="closeMenu()">Feedback</a>
+        <a routerLink="/login" (click)="closeMenu()">Login</a>
+        <a routerLink="/signup" (click)="closeMenu()">Signup</a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+        <a (click)="logout(); closeMenu()" role="button">Logout</a>
+      </ng-template>
 
       <div class="more-dropdown" (click)="$event.stopPropagation()">
         <button
@@ -42,10 +48,10 @@
         </button>
 
         <div class="more-menu" id="more-menu" role="menu" [class.open]="isMoreOpen">
-          <a href="#photo-gallery" role="menuitem" (click)="closeMenu()">Gallery</a>
-          <a href="#map-section" role="menuitem" (click)="closeMenu()">Nearby Spots</a>
-          <a href="#feedback" role="menuitem" (click)="closeMenu()">Contact</a>
-          <a href="#feedback" role="menuitem" (click)="closeMenu()">Help & FAQ</a>
+          <a routerLink="/gallery" role="menuitem" (click)="closeMenu()">Gallery</a>
+          <a routerLink="/find-food" role="menuitem" (click)="closeMenu()">Nearby Spots</a>
+          <a routerLink="/contact" role="menuitem" (click)="closeMenu()">Contact</a>
+          <a routerLink="/help" role="menuitem" (click)="closeMenu()">Help & FAQ</a>
         </div>
       </div>
     </div>

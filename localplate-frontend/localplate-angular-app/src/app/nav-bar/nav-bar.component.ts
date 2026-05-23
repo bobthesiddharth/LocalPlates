@@ -1,10 +1,12 @@
 import { Component, HostListener } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
@@ -22,6 +24,18 @@ export class NavBarComponent {
   toggleMoreMenu(event: Event): void {
     event.stopPropagation();
     this.isMoreOpen = !this.isMoreOpen;
+  }
+
+  constructor(private auth: AuthService, private router: Router) {}
+
+  isLoggedIn(): boolean {
+    return this.auth.isLoggedIn();
+  }
+
+  logout(): void {
+    this.auth.logout();
+    // After logout redirect to home (landing)
+    this.router.navigateByUrl('/');
   }
 
   closeMenu(): void {

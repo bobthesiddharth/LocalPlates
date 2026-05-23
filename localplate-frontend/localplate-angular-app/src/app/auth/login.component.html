@@ -1,7 +1,69 @@
 <app-nav-bar></app-nav-bar>
 <div class="auth-page">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-card" novalidate>
+  <!-- OTP Verification Form -->
+  <form *ngIf="showOtpVerify" [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()" class="auth-card" novalidate>
+    <h2>Login Verification</h2>
+    <p class="subtitle" style="text-align: center; margin-bottom: 20px; color: var(--text-muted);">
+      Please enter the 6-digit verification code sent to <strong>{{ loginEmail }}</strong> to complete sign in.
+    </p>
+
+    <div class="error" *ngIf="authError" style="margin-bottom:14px; text-align: center;">{{ authError }}</div>
+    <div class="success" *ngIf="successMessage" style="margin-bottom:14px; color: #2ecc71; text-align: center; font-weight: 600;">{{ successMessage }}</div>
+
+    <label class="field">
+      <span>OTP Code</span>
+      <input type="text" formControlName="code" placeholder="123456" maxlength="6" style="text-align: center; letter-spacing: 6px; font-size: 1.5rem; font-weight: bold;" />
+      <div class="error" *ngIf="o.code.touched && o.code.invalid">
+        <div *ngIf="o.code.errors?.['required']">Verification code is required.</div>
+        <div *ngIf="o.code.errors?.['pattern']">OTP must be exactly 6 digits.</div>
+      </div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="otpForm.invalid || submitting">
+      {{ submitting ? 'Verifying...' : 'Verify & Log In' }}
+    </button>
+  </form>
+
+  <!-- Forgot Password Form -->
+  <form *ngIf="showForgotPassword && !showOtpVerify" [formGroup]="forgotForm" (ngSubmit)="onForgotPassword()" class="auth-card" novalidate>
+    <h2>Forgot Password</h2>
+    <p class="subtitle" style="text-align: center; margin-bottom: 20px; color: var(--text-muted);">
+      Enter your email address and we will send you a link to reset your password.
+    </p>
+
+    <div class="error" *ngIf="authError" style="margin-bottom:14px; text-align: center;">{{ authError }}</div>
+    <div class="success" *ngIf="successMessage" style="margin-bottom:14px; color: #2ecc71; text-align: center; font-weight: 600;">{{ successMessage }}</div>
+
+    <label class="field">
+      <span>Email Address</span>
+      <input type="email" formControlName="email" placeholder="e.g. name@example.com" />
+      <div class="error" *ngIf="fg.email.touched && fg.email.invalid">
+        <div *ngIf="fg.email.errors?.['required']">Email is required.</div>
+        <div *ngIf="fg.email.errors?.['email']">Enter a valid email.</div>
+      </div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="forgotForm.invalid || submitting">
+      {{ submitting ? 'Sending Reset Link...' : 'Send Recovery Email' }}
+    </button>
+
+    <p class="muted"><a href="javascript:void(0)" (click)="toggleForgotPassword(false)">Back to Login</a></p>
+  </form>
+
+  <!-- Standard Login Form -->
+  <form *ngIf="!showOtpVerify && !showForgotPassword" [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-card" novalidate>
     <h2>Login</h2>
+
+    <div class="google-auth">
+      <div #googleButtonContainer class="google-button"></div>
+      <p class="google-note" *ngIf="googleLoading">Loading Google sign-in...</p>
+      <p class="google-note error" *ngIf="googleError">{{ googleError }}</p>
+    </div>
+
+    <div class="or-divider"><span>or use email</span></div>
+
+    <div class="error" *ngIf="authError" style="margin-bottom:14px; text-align: center;">{{ authError }}</div>
+    <div class="success" *ngIf="successMessage" style="margin-bottom:14px; color: #2ecc71; text-align: center; font-weight: 600;">{{ successMessage }}</div>
 
     <label class="field">
       <span>Email</span>
@@ -20,6 +82,10 @@
         <div *ngIf="f.password.errors?.['minlength']">Password must be at least 6 characters.</div>
       </div>
     </label>
+
+    <div style="text-align: right; margin-bottom: 16px; margin-top: -12px;">
+      <a href="javascript:void(0)" (click)="toggleForgotPassword(true)" class="forgot-link" style="font-size: 0.85rem; font-weight: 600; color: var(--primary); text-decoration: none;">Forgot password?</a>
+    </div>
 
     <button type="submit" class="btn" [disabled]="form.invalid || submitting">
       {{ submitting ? 'Signing in...' : 'Sign in' }}

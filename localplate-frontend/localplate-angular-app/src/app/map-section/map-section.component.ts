@@ -15,13 +15,26 @@ export class MapSectionComponent implements OnInit {
 
   map: L.Map | null = null;
   shops: Shop[] = [];
+  shopMarkers: L.Marker[] = [];
   userLocation: { lat: number; lng: number } | null = null;
 
   constructor(private shopDataService: ShopDataService) {}
 
   ngOnInit(): void {
-    this.shops = this.shopDataService.getShops();
+    this.loadShops();
     this.getUserLocation();
+  }
+
+  loadShops(): void {
+    this.shopDataService.getShops().subscribe({
+      next: (shops) => {
+        this.shops = shops;
+        this.renderShopMarkers();
+      },
+      error: () => {
+        alert('Could not load shops from the backend. Please make sure the Spring API is running on port 8080.');
+      }
+    });
   }
 
   getUserLocation(): void {
@@ -68,11 +81,14 @@ export class MapSectionComponent implements OnInit {
       .openPopup();
 
     // Add shop markers
-    this.addShopMarkers();
+    this.renderShopMarkers();
   }
 
-  addShopMarkers(): void {
+  renderShopMarkers(): void {
     if (!this.map) return;
+
+    this.shopMarkers.forEach((marker) => marker.remove());
+    this.shopMarkers = [];
 
     this.shops.forEach((shop, shopIndex) => {
       const marker = L.marker([shop.lat, shop.lng]).addTo(this.map!);
@@ -89,6 +105,8 @@ export class MapSectionComponent implements OnInit {
       marker.on('mouseover', () => {
         marker.openPopup();
       });
+
+      this.shopMarkers.push(marker);
     });
   }
 
@@ -150,7 +168,7 @@ export class MapSectionComponent implements OnInit {
         const updateBtn = document.createElement('button');
         updateBtn.className = 'btn-update-price';
         updateBtn.innerText = 'Update';
-        updateBtn.onclick = () => this.updatePrice(shopIndex, itemIndex, price);
+        updateBtn.onclick = () => this.updatePrice(shop, itemIndex, price);
 
         priceWrapper.appendChild(price);
         priceWrapper.appendChild(updateBtn);
@@ -177,17 +195,52 @@ export class MapSectionComponent implements OnInit {
     return container;
   }
 
-  updatePrice(shopIndex: number, itemIndex: number, priceElement: HTMLElement): void {
+  updatePrice(shop: Shop, itemIndex: number, priceElement: HTMLElement): void {
+    if (shop.id == null) return;
+
     const newPrice = prompt('Enter the new price (e.g., ₹30):');
     if (newPrice && newPrice.trim() !== '') {
-      this.shopDataService.updateShopItemPrice(shopIndex, itemIndex, newPrice);
-      priceElement.innerText = newPrice;
-      priceElement.classList.remove('pending-price');
+      this.shopDataService.updateShopItemPrice(shop.id, itemIndex, newPrice.trim()).subscribe({
+        next: (updatedShop) => {
+          this.shops = this.shops.map((existingShop) =>
+            existingShop.id === updatedShop.id ? updatedShop : existingShop
+          );
 
-      const btn = priceElement.nextElementSibling;
-      if (btn && btn.classList.contains('btn-update-price')) {
-        btn.remove();
-      }
+          priceElement.innerText = newPrice.trim();
+          priceElement.classList.remove('pending-price');
+
+          const btn = priceElement.nextElementSibling;
+          if (btn && btn.classList.contains('btn-update-price')) {
+            btn.remove();
+          }
+
+          this.renderShopMarkers();
+
+          const focusId = updatedShop.id ?? shop.id;
+          if (focusId != null) {
+            this.focusShop(focusId);
+          }
+        },
+        error: () => {
+          alert('Could not update the price in the backend.');
+        }
+      });
+    }
+  }
+
+  private focusShop(shopId: number): void {
+    if (!this.map) return;
+
+    const index = this.shops.findIndex((shop) => shop.id === shopId);
+    if (index < 0) return;
+
+    const marker = this.shopMarkers[index];
+    if (!marker) return;
+
+    const latlng = (marker.getLatLng && marker.getLatLng()) as L.LatLng | null;
+    if (latlng) {
+      this.map.setView(latlng, 17);
+      marker.openPopup();
     }
   }
 }
