@@ -1,0 +1,77 @@
+<app-nav-bar></app-nav-bar>
+<div class="auth-page">
+  <!-- OTP Verification Form -->
+  <form *ngIf="showOtpVerify" [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()" class="auth-card" novalidate>
+    <h2>Verify Email</h2>
+    <p class="subtitle" style="text-align: center; margin-bottom: 20px; color: var(--text-muted);">
+      We have sent a 6-digit verification code to <strong>{{ verifyEmail }}</strong>.
+    </p>
+
+    <div class="error" *ngIf="errorMessage" style="margin-bottom:14px; text-align: center;">{{ errorMessage }}</div>
+    <div class="success" *ngIf="successMessage" style="margin-bottom:14px; color: #2ecc71; text-align: center; font-weight: 600;">{{ successMessage }}</div>
+
+    <label class="field">
+      <span>OTP Code</span>
+      <input type="text" formControlName="code" placeholder="123456" maxlength="6" style="text-align: center; letter-spacing: 6px; font-size: 1.5rem; font-weight: bold;" />
+      <div class="error" *ngIf="o.code.touched && o.code.invalid">
+        <div *ngIf="o.code.errors?.['required']">Verification code is required.</div>
+        <div *ngIf="o.code.errors?.['pattern']">OTP must be exactly 6 digits.</div>
+      </div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="otpForm.invalid || submitting">
+      {{ submitting ? 'Verifying...' : 'Verify Code' }}
+    </button>
+  </form>
+
+  <!-- Sign Up Form -->
+  <form *ngIf="!showOtpVerify" [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-card" novalidate>
+    <h2>Create account</h2>
+
+    <div class="google-auth">
+      <div #googleButtonContainer class="google-button"></div>
+      <p class="google-note" *ngIf="googleLoading">Loading Google sign-in...</p>
+      <p class="google-note error" *ngIf="googleError">{{ googleError }}</p>
+    </div>
+
+    <div class="or-divider"><span>or sign up with email</span></div>
+
+    <div class="error" *ngIf="errorMessage" style="margin-bottom:14px; text-align: center;">{{ errorMessage }}</div>
+
+    <label class="field">
+      <span>Name</span>
+      <input type="text" formControlName="name" />
+      <div class="error" *ngIf="f.name.touched && f.name.invalid">Name is required.</div>
+    </label>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" formControlName="email" />
+      <div class="error" *ngIf="f.email.touched && f.email.invalid">
+        <div *ngIf="f.email.errors?.['required']">Email is required.</div>
+        <div *ngIf="f.email.errors?.['email']">Enter a valid email.</div>
+      </div>
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" />
+      <div class="error" *ngIf="f.password.touched && f.password.invalid">
+        <div *ngIf="f.password.errors?.['required']">Password is required.</div>
+        <div *ngIf="f.password.errors?.['minlength']">Password must be at least 6 characters.</div>
+      </div>
+    </label>
+
+    <label class="field">
+      <span>Confirm Password</span>
+      <input type="password" formControlName="confirmPassword" />
+      <div class="error" *ngIf="(f.confirmPassword.touched || form.touched) && form.errors?.['mismatch']">Passwords do not match.</div>
+    </label>
+
+    <button type="submit" class="btn" [disabled]="form.invalid || submitting">{{ submitting ? 'Creating...' : 'Create account' }}</button>
+
+    <p class="muted">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </form>
+</div>
+<app-footer></app-footer>
+

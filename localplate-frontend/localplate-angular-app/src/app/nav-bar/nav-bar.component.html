@@ -1,0 +1,59 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">🍛 LocalPlates</div>
+
+    <button
+      class="menu-toggle"
+      id="mobile-menu-btn"
+      type="button"
+      aria-label="Toggle menu"
+      aria-controls="nav-links"
+      [attr.aria-expanded]="isMenuOpen"
+      (click)="toggleMenu()"
+    >
+      <!-- Three horizontal dots -->
+      <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5" cy="12" r="2"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <circle cx="19" cy="12" r="2"></circle>
+      </svg>
+    </button>
+
+    <div class="nav-links" id="nav-links" [class.open]="isMenuOpen">
+      <ng-container *ngIf="!isLoggedIn(); else loggedIn">
+        <a routerLink="/" (click)="closeMenu()">Home</a>
+        <a routerLink="/about" (click)="closeMenu()">About</a>
+        <a routerLink="/find-food" (click)="closeMenu()">Find Food</a>
+        <a routerLink="/feedback" (click)="closeMenu()">Feedback</a>
+        <a routerLink="/login" (click)="closeMenu()">Login</a>
+        <a routerLink="/signup" (click)="closeMenu()">Signup</a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+        <a (click)="logout(); closeMenu()" role="button">Logout</a>
+      </ng-template>
+
+      <div class="more-dropdown" (click)="$event.stopPropagation()">
+        <button
+          type="button"
+          class="more-toggle"
+          aria-haspopup="menu"
+          aria-controls="more-menu"
+          [attr.aria-expanded]="isMoreOpen"
+          (click)="toggleMoreMenu($event)"
+        >
+          More
+          <span class="more-caret" [class.open]="isMoreOpen">⌄</span>
+        </button>
+
+        <div class="more-menu" id="more-menu" role="menu" [class.open]="isMoreOpen">
+          <a routerLink="/gallery" role="menuitem" (click)="closeMenu()">Gallery</a>
+          <a routerLink="/find-food" role="menuitem" (click)="closeMenu()">Nearby Spots</a>
+          <a routerLink="/contact" role="menuitem" (click)="closeMenu()">Contact</a>
+          <a routerLink="/help" role="menuitem" (click)="closeMenu()">Help & FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

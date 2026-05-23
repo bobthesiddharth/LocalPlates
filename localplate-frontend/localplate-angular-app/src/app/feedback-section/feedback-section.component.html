@@ -1,0 +1,58 @@
+
+<!-- Feedback Section -->
+<section id="feedback" class="feedback-section">
+  <div class="feedback-container">
+    <h2>Help Us Improve</h2>
+    <p>Have a favorite spot we missed? Or suggestions to improve LocalPlates? Let us know!</p>
+
+    <form (ngSubmit)="onSubmit()" class="feedback-form" #feedbackForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          [(ngModel)]="formData.name"
+          placeholder="Your Name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="shop-name">Shop Recommendation</label>
+        <input
+          type="text"
+          id="shop-name"
+          name="shopName"
+          [(ngModel)]="formData.shopName"
+          placeholder="E.g. Sharma Ji Tiffin"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message / Feedback</label>
+        <textarea
+          id="message"
+          name="message"
+          [(ngModel)]="formData.message"
+          rows="4"
+          placeholder="Tell us what makes it special or how we can improve..."
+          required
+        ></textarea>
+      </div>
+
+      <!-- Success Message -->
+      <div *ngIf="submitMessage" class="success-message">{{ submitMessage }}</div>
+
+      <!-- Error Message -->
+      <div *ngIf="submitError" class="error-message">{{ submitError }}</div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Sending...' : 'Send Feedback' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()" [disabled]="isSubmitting">
+        Clear
+      </button>
+    </form>
+  </div>
+</section>

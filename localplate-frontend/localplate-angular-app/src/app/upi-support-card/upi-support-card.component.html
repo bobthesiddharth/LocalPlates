@@ -1,0 +1,57 @@
+<div class="card" role="region" aria-label="UPI support card">
+  <div class="card-header">
+    <div class="card-header-label">Support</div>
+    <h2>{{ name }}</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="qr-frame">
+      <div class="qr-inner">
+        <ng-container *ngIf="!qrBroken; else placeholder">
+          <img [src]="qrImage" alt="UPI QR code" (error)="onQrError()" />
+        </ng-container>
+        <ng-template #placeholder>
+          <div class="qr-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            </svg>
+            <span>QR not available</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="scan-hint"><span class="hint-dot"></span> Scan with any UPI app</div>
+
+    <div class="divider"><span>Or copy UPI</span></div>
+
+    <div class="upi-id-row">
+      <div>
+        <div class="upi-id-label">UPI ID</div>
+        <div class="upi-id-value">{{ upiId }}</div>
+      </div>
+
+      <button class="copy-btn" (click)="copyUpiId()" aria-label="Copy UPI ID">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="apps-row" aria-hidden="true">
+      <div class="app-pill">GPay</div>
+      <div class="app-pill">PhonePe</div>
+      <div class="app-pill">Paytm</div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="thank-text"><strong>{{ name }}</strong> — {{ thankText }}</div>
+  </div>
+</div>
+
+<div class="toast" [class.show]="toastVisible">UPI ID copied</div>
+

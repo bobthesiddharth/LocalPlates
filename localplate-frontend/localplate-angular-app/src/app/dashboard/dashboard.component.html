@@ -1,0 +1,87 @@
+<app-nav-bar></app-nav-bar>
+<div class="dashboard-root">
+  <header class="dash-header">
+    <div class="header-text">
+      <h1>LocalPlates Admin</h1>
+      <p class="subtitle">Manage shops, view them on map and perform CRUD operations for testing.</p>
+    </div>
+    <div class="actions">
+      <button class="btn btn-header" [class.cancel]="showForm" (click)="toggleCreate()">
+        <span class="btn-icon">{{ showForm ? '✕' : '＋' }}</span>
+        {{ showForm ? 'Cancel' : 'Add Shop' }}
+      </button>
+    </div>
+  </header>
+
+  <div class="status-container" *ngIf="loading || errorMessage">
+    <div class="status-alert loading" *ngIf="loading">
+      <span class="spinner"></span>
+      <p>Loading shops from the Spring backend...</p>
+    </div>
+    <div class="status-alert error" *ngIf="errorMessage">
+      <span class="alert-icon">⚠</span>
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+
+  <section id="dashboard-map" class="map-area"></section>
+
+  <section class="content">
+    <aside class="form-area animate-fade" *ngIf="showForm">
+       <h3>{{ editingId == null ? 'Create Shop' : 'Edit Shop' }}</h3>
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-group">
+          <label for="shopName">Name</label>
+          <input id="shopName" formControlName="name" placeholder="e.g. Arsalan, Park Circus" />
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="shopLat">Latitude</label>
+            <input id="shopLat" formControlName="lat" type="number" step="any" placeholder="22.575" />
+          </div>
+          <div class="form-group">
+            <label for="shopLng">Longitude</label>
+            <input id="shopLng" formControlName="lng" type="number" step="any" placeholder="88.472" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-save">
+            {{ editingId == null ? 'Create Shop' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+    </aside>
+
+    <main class="list-area">
+      <div class="shop-card" *ngFor="let s of shops; let i = index">
+        <div class="card-content">
+          <div class="card-header-row">
+            <span class="shop-avatar">🏪</span>
+            <h4 class="shop-title" [title]="s.name">{{ s.name }}</h4>
+          </div>
+          <div class="coords-row">
+            <svg class="geo-icon" viewBox="0 0 24 24" width="14" height="14">
+              <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <span class="coords-text">{{ s.lat | number:'1.3-6' }}, {{ s.lng | number:'1.3-6' }}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-action edit" (click)="startEdit(s)" title="Edit shop info">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn-action delete" (click)="remove(s)" title="Delete shop">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+    </main>
+  </section>
+</div>
+<app-footer></app-footer>

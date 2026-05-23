@@ -1,0 +1,55 @@
+<app-nav-bar></app-nav-bar>
+<app-hero-section></app-hero-section>
+
+<main class="home-shell">
+  <section class="quick-links">
+	<article class="quick-card">
+	  <h3>About LocalPlates</h3>
+	  <p>Learn what powers our community-driven local food discovery.</p>
+	  <a routerLink="/about">Read Story</a>
+	</article>
+
+	<article class="quick-card">
+	  <h3>Find Food on Map</h3>
+	  <p>Jump to dedicated map page and discover affordable nearby shops.</p>
+	  <a routerLink="/find-food">Open Map</a>
+	</article>
+
+	<article class="quick-card">
+	  <h3>Food Gallery</h3>
+	  <p>Browse rich visuals of tiffin meals, snacks, and local flavors.</p>
+	  <a routerLink="/gallery">View Gallery</a>
+	</article>
+  </section>
+
+  <app-content-carousel
+	title="Food Spotlight"
+	subtitle="Curated highlights to get you started quickly"
+	[items]="spotlightSlides"
+  ></app-content-carousel>
+
+
+
+  <section class="stats-strip" aria-label="Platform highlights">
+	<div class="stat-card">
+	  <p class="number">50+</p>
+	  <p class="label">Local dishes featured</p>
+	</div>
+	<div class="stat-card">
+	  <p class="number">20+</p>
+	  <p class="label">Popular neighborhood spots</p>
+	</div>
+	<div class="stat-card">
+	  <p class="number">100%</p>
+	  <p class="label">Built for budget-friendly discovery</p>
+	</div>
+  </section>
+</main>
+
+<app-upi-support-card></app-upi-support-card>
+<app-content-carousel
+  title="City Stories"
+  subtitle="Community trends and local recommendations"
+  [items]="cityStoriesSlides"
+></app-content-carousel>
+<app-footer></app-footer>

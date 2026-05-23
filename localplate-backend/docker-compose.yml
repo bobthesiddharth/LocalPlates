@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  localplates-db:
+    image: mysql:8.0
+    container_name: localplates-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: localplates_auth
+      MYSQL_USER: plates_admin
+      MYSQL_PASSWORD: platespassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql_data:
